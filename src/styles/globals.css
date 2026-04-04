@@ -1,0 +1,23 @@
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:#0C0C0E; --surface:#13131A; --surface2:#1A1A24; --surface3:#1E1E2A;
+  --border:#1E1E2E; --border2:#2A2A3A;
+  --gold:#C9A84C; --gold2:#A8863A; --gold3:#7A6030; --gold-bg:#16130A; --gold-dim:#2A2000;
+  --text:#F0EEE8; --text2:#B8B6B0; --muted:#6B6B7E; --muted2:#9A9AAE;
+  --green:#3DCB8A; --green-bg:#0A1F15; --green-border:#1a3d2a;
+  --red:#E05A5A; --red-bg:#1F0A0A; --red-border:#3d1a1a;
+  --radius:12px; --radius-sm:8px;
+}
+[data-theme="light"] {
+  --bg:#F5F4F0; --surface:#FFFFFF; --surface2:#F0EEE8; --surface3:#E8E6E0;
+  --border:#E0DED8; --border2:#D0CEC8;
+  --text:#0C0C0E; --text2:#2A2A2A; --muted:#888880; --muted2:#666660;
+  --gold:#9A6F20; --gold2:#7A5518; --gold3:#C9A84C; --gold-bg:#FDF8EC; --gold-dim:#E8D8A0;
+}
+html, body { background:var(--bg); color:var(--text); font-family:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',sans-serif; font-size:14px; min-height:100vh; }
+button { font-family:inherit; cursor:pointer; }
+input, textarea { font-family:inherit; }
+::-webkit-scrollbar { width:5px; }
+::-webkit-scrollbar-track { background:var(--surface); }
+::-webkit-scrollbar-thumb { background:var(--border2); border-radius:3px; }

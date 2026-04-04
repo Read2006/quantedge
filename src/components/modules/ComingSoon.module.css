@@ -1,0 +1,12 @@
+.wrap { display:flex; flex-direction:column; gap:24px; max-width:680px; }
+.header { display:flex; align-items:center; gap:14px; }
+.num { font-size:13px; color:var(--muted); font-weight:600; background:var(--surface); border:1px solid var(--border); border-radius:6px; padding:4px 10px; }
+.title { font-size:20px; font-weight:600; color:var(--text); }
+.badge { font-size:11px; padding:4px 12px; border-radius:20px; background:var(--gold-bg); color:var(--gold); border:1px solid var(--gold-dim); }
+.desc { font-size:14px; color:var(--text2); line-height:1.7; background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:20px; }
+.featureGrid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+.featureCard { display:flex; align-items:center; gap:10px; background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-sm); padding:14px 16px; font-size:13px; color:var(--text2); }
+.featureDot { width:6px; height:6px; border-radius:50%; background:var(--gold); flex-shrink:0; }
+.cta { background:var(--gold-bg); border:1px solid var(--gold-dim); border-radius:var(--radius); padding:20px; }
+.ctaText { font-size:13px; color:var(--text2); margin-bottom:8px; }
+.ctaNote { font-size:11px; color:var(--gold-dim); }

@@ -1,0 +1,11 @@
+.topbar { height:56px; background:var(--surface); border-bottom:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; padding:0 24px; flex-shrink:0; position:sticky; top:0; z-index:100; }
+.logoWrap { display:flex; align-items:center; gap:10px; }
+.wordmark { font-size:16px; font-weight:600; color:var(--text); letter-spacing:-0.01em; }
+.wordmark span { color:var(--gold); }
+.sub { font-size:9px; color:var(--muted); letter-spacing:0.14em; text-transform:uppercase; margin-top:1px; }
+.right { display:flex; align-items:center; gap:10px; }
+.pill { font-size:11px; padding:4px 12px; border-radius:20px; border:1px solid var(--border2); color:var(--muted2); background:transparent; transition:all 0.12s; }
+.pill:hover { background:var(--surface2); color:var(--text); }
+.pillLive { font-size:11px; padding:4px 12px; border-radius:20px; border:1px solid var(--green-border); color:var(--green); background:var(--green-bg); display:flex; align-items:center; gap:5px; }
+.liveDot { width:5px; height:5px; border-radius:50%; background:var(--green); }
+.avatar { width:30px; height:30px; border-radius:50%; background:var(--gold-bg); border:1px solid var(--gold3); display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:600; color:var(--gold); }
