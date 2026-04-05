@@ -4,7 +4,9 @@ import Sidebar from './components/layout/Sidebar';
 import MacroRadar from './components/modules/MacroRadar';
 import Correlations from './components/modules/Correlations';
 import SmartMoney from './components/modules/SmartMoney';
-import ComingSoon from './components/modules/ComingSoon';
+import NarrativeDetector from './components/modules/NarrativeDetector';
+import TradeJournal from './components/modules/TradeJournal';
+import WhatMovedThis from './components/modules/WhatMovedThis';
 import AIChat from './components/modules/AIChat';
 import s from './App.module.css';
 
@@ -24,9 +26,9 @@ const App = () => {
       case 'macro':        return <MacroRadar />;
       case 'correlations': return <Correlations />;
       case 'smartmoney':   return <SmartMoney />;
-      case 'narratives':   return <ComingSoon moduleId="narratives" />;
-      case 'journal':      return <ComingSoon moduleId="journal" />;
-      case 'whatmoved':    return <ComingSoon moduleId="whatmoved" />;
+      case 'narratives':   return <NarrativeDetector />;
+      case 'journal':      return <TradeJournal />;
+      case 'whatmoved':    return <WhatMovedThis />;
       default:             return <MacroRadar />;
     }
   };

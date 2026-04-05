@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { ScatterChart, Scatter, XAxis, YAxis, Tooltip, ResponsiveContainer, LineChart, Line, Legend } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, Legend } from 'recharts';
 import { fetchCoinHistory, fetchBTCHistory, fmtNum, nowStr } from '../../utils/api';
 import s from './Correlations.module.css';
 

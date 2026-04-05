@@ -1,6 +1,4 @@
 import { useState, useEffect } from 'react';
-import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell } from 'recharts';
-import { fetchCryptoMarkets, fmtNum } from '../../utils/api';
 import s from './SmartMoney.module.css';
 
 const FUNDING_DATA = [
@@ -21,12 +19,9 @@ const WHALE_ALERTS = [
 ];
 
 const SmartMoney = () => {
-  const [crypto, setCrypto] = useState([]);
   const [fearGreed] = useState(62);
 
-  useEffect(() => {
-    fetchCryptoMarkets().then(d => setCrypto(d || []));
-  }, []);
+  useEffect(() => {}, []);
 
   const fearColor = fearGreed > 75 ? 'var(--red)' : fearGreed > 50 ? 'var(--gold)' : 'var(--green)';
   const fearLabel = fearGreed > 75 ? 'Extreme Greed' : fearGreed > 55 ? 'Greed' : fearGreed > 45 ? 'Neutral' : fearGreed > 25 ? 'Fear' : 'Extreme Fear';
