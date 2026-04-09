@@ -1,0 +1,49 @@
+.overlay { position:fixed; inset:0; background:rgba(0,0,0,0.75); display:flex; align-items:center; justify-content:center; z-index:1000; padding:24px; }
+.modal { width:100%; max-width:520px; background:var(--surface); border:1px solid var(--border); border-radius:16px; overflow:hidden; display:flex; flex-direction:column; }
+.header { display:flex; justify-content:space-between; align-items:flex-start; padding:20px 24px 0; }
+.headerLeft {}
+.title { font-size:17px; font-weight:600; color:var(--text); margin-bottom:3px; }
+.sub { font-size:12px; color:var(--muted); }
+.closeBtn { background:none; border:1px solid var(--border2); border-radius:6px; color:var(--muted2); padding:4px 8px; font-size:12px; transition:all 0.12s; }
+.closeBtn:hover { background:var(--surface2); color:var(--text); }
+.tabs { display:flex; gap:2px; padding:16px 24px 0; }
+.tab { font-size:12px; padding:7px 16px; border-radius:var(--radius-sm); border:1px solid transparent; background:transparent; color:var(--muted2); transition:all 0.12s; display:flex; align-items:center; gap:6px; }
+.tab:hover { background:var(--surface2); color:var(--text); }
+.activeTab { background:var(--gold-bg) !important; color:var(--gold) !important; border-color:var(--gold-dim) !important; }
+.count { background:var(--gold); color:#0C0C0E; font-size:10px; font-weight:700; width:16px; height:16px; border-radius:50%; display:flex; align-items:center; justify-content:center; }
+.body { padding:20px 24px; display:flex; flex-direction:column; gap:16px; }
+.formGrid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+.field { display:flex; flex-direction:column; gap:5px; }
+.field label { font-size:10px; color:var(--muted); text-transform:uppercase; letter-spacing:0.08em; }
+.field input, .field select { background:var(--surface2); border:1px solid var(--border2); border-radius:var(--radius-sm); padding:9px 12px; font-size:13px; color:var(--text); outline:none; transition:border-color 0.12s; font-family:inherit; }
+.field input:focus, .field select:focus { border-color:var(--gold-dim); }
+.field select option { background:var(--surface); }
+.preview { background:var(--surface2); border:1px solid var(--border); border-radius:var(--radius-sm); padding:12px 14px; font-size:13px; color:var(--muted2); display:flex; align-items:center; gap:8px; }
+.preview strong { color:var(--text); }
+.previewDot { width:6px; height:6px; border-radius:50%; background:var(--gold); flex-shrink:0; }
+.saveBtn { background:var(--gold); border:none; border-radius:var(--radius-sm); padding:11px; font-size:13px; font-weight:600; color:#0C0C0E; transition:all 0.12s; width:100%; }
+.saveBtn:hover:not(:disabled) { background:var(--gold2); }
+.saveBtn:disabled { opacity:0.4; cursor:not-allowed; }
+.savedBtn { background:var(--green) !important; color:#fff !important; }
+.empty { text-align:center; padding:32px 0; }
+.emptyTitle { font-size:15px; font-weight:600; color:var(--text2); margin-bottom:6px; }
+.emptySub { font-size:12px; color:var(--muted); margin-bottom:16px; }
+.emptyBtn { background:var(--gold-bg); border:1px solid var(--gold-dim); border-radius:var(--radius-sm); padding:8px 20px; font-size:12px; color:var(--gold); font-weight:600; }
+.alertsList { display:flex; flex-direction:column; gap:8px; max-height:320px; overflow-y:auto; }
+.alertCard { background:var(--surface2); border:1px solid var(--border); border-radius:var(--radius-sm); padding:12px 14px; }
+.paused { opacity:0.5; }
+.alertTop { display:flex; justify-content:space-between; align-items:center; margin-bottom:4px; }
+.alertLeft { display:flex; align-items:center; gap:8px; }
+.statusDot { width:6px; height:6px; border-radius:50%; flex-shrink:0; }
+.activeDot { background:var(--green); }
+.pausedDot { background:var(--muted); }
+.alertAsset { font-size:13px; font-weight:600; color:var(--text); }
+.alertCondition { font-size:12px; color:var(--muted2); }
+.alertActions { display:flex; gap:6px; }
+.actionBtn { font-size:11px; padding:3px 10px; border-radius:20px; border:1px solid var(--border2); background:transparent; color:var(--muted2); transition:all 0.12s; }
+.actionBtn:hover { background:var(--surface); color:var(--text); }
+.deleteBtn { border-color:var(--red-border); color:var(--red); }
+.deleteBtn:hover { background:var(--red-bg); }
+.alertNote { font-size:11px; color:var(--muted2); margin-bottom:4px; font-style:italic; }
+.alertMeta { font-size:10px; color:var(--muted); }
+.footer { padding:10px 24px; border-top:1px solid var(--border); font-size:10px; color:var(--muted); text-align:center; }

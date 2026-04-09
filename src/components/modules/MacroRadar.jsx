@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, AreaChart, Area } from 'recharts';
+import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 import { fetchFRED, fetchCryptoMarkets, fetchBTCHistory, fmtNum, nowStr } from '../../utils/api';
 import s from './MacroRadar.module.css';
 
@@ -12,10 +12,9 @@ const MetricCard = ({ label, value, change, changeDir, badge, badgeType }) => (
   </div>
 );
 
-const MacroRadar = () => {
+const MacroRadar = ({ onSetAlert }) => {
   const [data, setData] = useState({ fed:null, cpi:null, btc:null, gold:null, crypto:[], btcHistory:[] });
   const [updated, setUpdated] = useState('Fetching live data...');
-  const [loading, setLoading] = useState(true);
 
   const load = async () => {
     setUpdated('Fetching live data...');
@@ -38,7 +37,6 @@ const MacroRadar = () => {
     } catch {
       setUpdated('Some data unavailable — showing cached values');
     }
-    setLoading(false);
   };
 
   useEffect(() => { load(); }, []);
@@ -79,7 +77,7 @@ const MacroRadar = () => {
         </div>
         <div className={s.actions}>
           <button className={s.btn} onClick={load}>Refresh</button>
-          <button className={`${s.btn} ${s.primary}`}>Set alert</button>
+          <button className={`${s.btn} ${s.primary}`} onClick={onSetAlert}>Set alert</button>
         </div>
       </div>
 
