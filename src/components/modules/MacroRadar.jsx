@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, AreaChart, Area } from 'recharts';
 import { fetchFRED, fetchCryptoMarkets, fetchBTCHistory, fmtNum, nowStr } from '../../utils/api';
 import s from './MacroRadar.module.css';
 
@@ -15,6 +15,7 @@ const MetricCard = ({ label, value, change, changeDir, badge, badgeType }) => (
 const MacroRadar = () => {
   const [data, setData] = useState({ fed:null, cpi:null, btc:null, gold:null, crypto:[], btcHistory:[] });
   const [updated, setUpdated] = useState('Fetching live data...');
+  const [loading, setLoading] = useState(true);
 
   const load = async () => {
     setUpdated('Fetching live data...');
@@ -37,6 +38,7 @@ const MacroRadar = () => {
     } catch {
       setUpdated('Some data unavailable — showing cached values');
     }
+    setLoading(false);
   };
 
   useEffect(() => { load(); }, []);
