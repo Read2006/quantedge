@@ -1,9 +1,6 @@
-const FRED_KEY = process.env.REACT_APP_FRED_API_KEY || 'DEMO_KEY';
-
 export async function fetchFRED(series) {
   try {
-    const url = `https://api.stlouisfed.org/fred/series/observations?series_id=${series}&api_key=${FRED_KEY}&file_type=json&sort_order=desc&limit=12`;
-    const r = await fetch(url);
+    const r = await fetch(`/api/fred?series=${series}`);
     const d = await r.json();
     return d.observations || [];
   } catch { return []; }
@@ -30,11 +27,28 @@ export async function fetchCoinHistory(coinId, days = 30) {
   } catch { return null; }
 }
 
-export async function fetchGlobalCrypto() {
+export async function fetchFundingRates() {
   try {
-    const r = await fetch('https://api.coingecko.com/api/v3/global');
-    return await r.json();
-  } catch { return null; }
+    const r = await fetch('/api/funding');
+    const d = await r.json();
+    return d.funding || [];
+  } catch { return []; }
+}
+
+export async function fetchFearGreed() {
+  try {
+    const r = await fetch('/api/feargreed');
+    const d = await r.json();
+    return d.data?.[0] || { value: '62', value_classification: 'Greed' };
+  } catch { return { value: '62', value_classification: 'Greed' }; }
+}
+
+export async function fetchNews(query = '') {
+  try {
+    const r = await fetch(`/api/news?q=${encodeURIComponent(query)}`);
+    const d = await r.json();
+    return d.articles || [];
+  } catch { return []; }
 }
 
 export function fmtNum(n, dec = 2) {
@@ -47,4 +61,13 @@ export function fmtPct(n, dec = 2) {
 
 export function nowStr() {
   return new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+}
+
+export function timeAgo(dateStr) {
+  const diff = Date.now() - new Date(dateStr).getTime();
+  const h = Math.floor(diff / 3600000);
+  const m = Math.floor(diff / 60000);
+  if (h > 0) return `${h}h ago`;
+  if (m > 0) return `${m}m ago`;
+  return 'just now';
 }
