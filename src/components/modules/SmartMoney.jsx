@@ -1,16 +1,6 @@
 import { useState, useEffect } from 'react';
-import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell } from 'recharts';
-import { fetchCryptoMarkets, fmtNum } from '../../utils/api';
+import { fetchFundingRates, fetchFearGreed } from '../../utils/api';
 import s from './SmartMoney.module.css';
-
-const FUNDING_DATA = [
-  { asset:'BTC', rate:0.0102, sentiment:'Longs dominant' },
-  { asset:'ETH', rate:0.0087, sentiment:'Slightly bullish' },
-  { asset:'SOL', rate:0.0241, sentiment:'Overleveraged longs' },
-  { asset:'BNB', rate:-0.0031, sentiment:'Shorts dominant' },
-  { asset:'DOGE', rate:0.0312, sentiment:'Extreme greed' },
-  { asset:'ADA', rate:0.0055, sentiment:'Neutral' },
-];
 
 const WHALE_ALERTS = [
   { time:'2h ago', asset:'BTC', action:'Large buy', amount:'$42.3M', type:'buy', exchange:'Binance' },
@@ -21,55 +11,89 @@ const WHALE_ALERTS = [
 ];
 
 const SmartMoney = () => {
-  const [crypto, setCrypto] = useState([]);
-  const [fearGreed] = useState(62);
+  const [fearGreed, setFearGreed] = useState({ value: '50', value_classification: 'Neutral' });
+  const [funding, setFunding] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchCryptoMarkets().then(d => setCrypto(d || []));
+    const load = async () => {
+      const [fg, fr] = await Promise.all([
+        fetchFearGreed(),
+        fetchFundingRates(),
+      ]);
+      setFearGreed(fg);
+      if (fr.length > 0) setFunding(fr);
+      setLoading(false);
+    };
+    load();
   }, []);
 
-  const fearColor = fearGreed > 75 ? 'var(--red)' : fearGreed > 50 ? 'var(--gold)' : 'var(--green)';
-  const fearLabel = fearGreed > 75 ? 'Extreme Greed' : fearGreed > 55 ? 'Greed' : fearGreed > 45 ? 'Neutral' : fearGreed > 25 ? 'Fear' : 'Extreme Fear';
+  const fgValue = parseInt(fearGreed.value);
+  const fearColor = fgValue > 75 ? 'var(--red)' : fgValue > 50 ? 'var(--gold)' : fgValue > 25 ? 'var(--green)' : 'var(--red)';
+  const fearLabel = fearGreed.value_classification;
+
+  const displayFunding = funding.length > 0 ? funding : [
+    { symbol:'BTC', rate:0.0102, sentiment:'Longs dominant' },
+    { symbol:'ETH', rate:0.0087, sentiment:'Slightly bullish' },
+    { symbol:'SOL', rate:0.0241, sentiment:'Overleveraged longs' },
+    { symbol:'BNB', rate:-0.0031, sentiment:'Shorts dominant' },
+    { symbol:'DOGE', rate:0.0312, sentiment:'Extreme greed' },
+    { symbol:'ADA', rate:0.0055, sentiment:'Neutral' },
+  ];
+
+  const topFunding = displayFunding.reduce((a, b) => Math.abs(a.rate) > Math.abs(b.rate) ? a : b, displayFunding[0] || {});
+
+  const fearNote = fgValue <= 25 ? 'Extreme fear in markets — historically a buying opportunity for long-term holders. Panic selling often creates value.' :
+    fgValue <= 45 ? 'Fear dominant — market sentiment negative. Contrarian opportunities may exist for patient traders.' :
+    fgValue <= 55 ? 'Neutral sentiment — no strong directional bias. Wait for clearer signals before taking large positions.' :
+    fgValue <= 75 ? 'Greed building — momentum present but watch for reversal signals. Consider taking partial profits.' :
+    'Extreme greed — retail euphoria at dangerous levels. High probability of correction. Reduce risk exposure.';
 
   return (
     <div className={s.wrap}>
       <div className={s.pageHdr}>
         <div>
           <div className={s.pageTitle}>Smart Money Tracker</div>
-          <div className={s.pageSub}>Institutional signals, whale movements, and retail sentiment</div>
+          <div className={s.pageSub}>{loading ? 'Loading live data...' : 'Live · Binance funding rates + Alternative.me sentiment'}</div>
         </div>
       </div>
 
       <div className={s.topRow}>
         <div className={s.panel}>
-          <div className={s.panelHdr}><div className={s.panelTitle}>Fear & Greed Index</div></div>
+          <div className={s.panelHdr}>
+            <div className={s.panelTitle}>Fear & Greed Index</div>
+            <span className={s.panelTag}>Live · Alternative.me</span>
+          </div>
           <div className={s.fearWrap}>
             <div className={s.fearGauge}>
-              <div className={s.fearNum} style={{ color: fearColor }}>{fearGreed}</div>
+              <div className={s.fearNum} style={{ color: fearColor }}>{fearGreed.value}</div>
               <div className={s.fearLabel} style={{ color: fearColor }}>{fearLabel}</div>
             </div>
             <div className={s.fearBar}>
               <div className={s.fearTrack}>
-                <div className={s.fearFill} style={{ width:`${fearGreed}%`, background: fearColor }}></div>
-                <div className={s.fearThumb} style={{ left:`${fearGreed}%`, background: fearColor }}></div>
+                <div className={s.fearFill} style={{ width:`${fgValue}%`, background: fearColor }}></div>
+                <div className={s.fearThumb} style={{ left:`${fgValue}%`, background: fearColor }}></div>
               </div>
               <div className={s.fearLegend}><span>Extreme Fear</span><span>Extreme Greed</span></div>
             </div>
-            <div className={s.fearNote}>Retail is greedy — historically a signal to be cautious.</div>
+            <div className={s.fearNote}>{fearNote}</div>
           </div>
         </div>
 
         <div className={s.panel}>
-          <div className={s.panelHdr}><div className={s.panelTitle}>Funding Rates</div><span className={s.panelTag}>Perpetual futures</span></div>
+          <div className={s.panelHdr}>
+            <div className={s.panelTitle}>Funding Rates</div>
+            <span className={s.panelTag}>Live · Binance</span>
+          </div>
           <div className={s.fundingList}>
-            {FUNDING_DATA.map(f => (
-              <div key={f.asset} className={s.fundingRow}>
+            {displayFunding.map(f => (
+              <div key={f.symbol || f.asset} className={s.fundingRow}>
                 <div>
-                  <span className={s.fundingAsset}>{f.asset}</span>
+                  <span className={s.fundingAsset}>{f.symbol || f.asset}</span>
                   <span className={s.fundingSent}>{f.sentiment}</span>
                 </div>
-                <span className={`${s.fundingRate} ${f.rate > 0.02 ? s.danger : f.rate < 0 ? s.neg : s.pos}`}>
-                  {f.rate > 0 ? '+' : ''}{(f.rate).toFixed(4)}%
+                <span className={`${s.fundingRate} ${Math.abs(f.rate) > 0.02 ? s.danger : f.rate < 0 ? s.neg : s.pos}`}>
+                  {f.rate > 0 ? '+' : ''}{Number(f.rate).toFixed(4)}%
                 </span>
               </div>
             ))}
@@ -91,7 +115,7 @@ const SmartMoney = () => {
               <span className={s.whaleAction}>{w.action}</span>
               <span className={s.whaleAmount}>{w.amount}</span>
               <span className={s.whaleEx}>{w.exchange}</span>
-              <span className={`${s.whaleBadge} ${s[w.type]}`}>{w.type === 'buy' ? 'Accumulation' : w.type === 'sell' ? 'Distribution' : 'Neutral'}</span>
+              <span className={`${s.whaleBadge} ${s[w.type]}`}>{w.type==='buy'?'Accumulation':w.type==='sell'?'Distribution':'Neutral'}</span>
             </div>
           ))}
         </div>
@@ -101,10 +125,20 @@ const SmartMoney = () => {
         <div className={s.insightIcon}>AI</div>
         <div>
           <div className={s.insightTitle}>QuantEdge signal</div>
-          <div className={s.insightText}>SOL funding rate is at 0.0241% — significantly above neutral. Overleveraged longs historically precede sharp corrections. Consider reducing long exposure or hedging.</div>
+          <div className={s.insightText}>
+            {fgValue <= 20
+              ? `Fear & Greed at ${fearGreed.value} — Extreme Fear. Markets in panic. Historically the best time to accumulate quality assets. Smart money buys when retail sells.`
+              : fgValue <= 40
+              ? `Fear & Greed at ${fearGreed.value} — Fear zone. Sentiment negative but not extreme. Watch for stabilization signals before entering positions.`
+              : topFunding && topFunding.symbol && Math.abs(topFunding.rate) > 0.02
+              ? `${topFunding.symbol} funding rate at ${Number(topFunding.rate).toFixed(4)}% — overleveraged ${topFunding.rate > 0 ? 'longs' : 'shorts'}. High liquidation risk. Consider hedging or reducing exposure.`
+              : `Markets showing ${fearLabel} sentiment at ${fearGreed.value}. Monitor macro signals and funding rates for directional bias before entering new positions.`
+            }
+          </div>
         </div>
       </div>
     </div>
   );
 };
+
 export default SmartMoney;
