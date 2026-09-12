@@ -1,4 +1,4 @@
-.*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
   --bg:#0C0C0E; --surface:#13131A; --surface2:#1A1A24; --surface3:#1E1E2A;
