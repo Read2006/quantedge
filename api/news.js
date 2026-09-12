@@ -1,4 +1,4 @@
-.export default async function handler(req, res) {
+export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   const { q } = req.query;
   const key = process.env.NEWS_API_KEY;
