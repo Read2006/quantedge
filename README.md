@@ -1,4 +1,4 @@
-# QuantEdge.
+# QuantEdge
 **Professional multi-market trading intelligence platform — by Nexura Solutions**
 
 ## What's included
