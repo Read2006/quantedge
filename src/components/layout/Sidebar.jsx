@@ -1,4 +1,4 @@
-import s from './Sidebar.module.css';
+.import s from './Sidebar.module.css';
 
 const NAV = [
   { id:'macro', label:'Macro Radar', num:'01' },
