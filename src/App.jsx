@@ -1,4 +1,4 @@
-.import { useState } from 'react';
+import { useState } from 'react';
 import Topbar from './components/layout/Topbar';
 import Sidebar from './components/layout/Sidebar';
 import MacroRadar from './components/modules/MacroRadar';
