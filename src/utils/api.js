@@ -1,4 +1,4 @@
-export async function fetchFRED(series) {
+.export async function fetchFRED(series) {
   try {
     const r = await fetch(`/api/fred?series=${series}`);
     const d = await r.json();
