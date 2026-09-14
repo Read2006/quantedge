@@ -7,6 +7,7 @@ import SmartMoney from './components/modules/SmartMoney';
 import NarrativeDetector from './components/modules/NarrativeDetector';
 import TradeJournal from './components/modules/TradeJournal';
 import WhatMovedThis from './components/modules/WhatMovedThis';
+import Settings from './components/modules/Settings';
 import AIChat from './components/modules/AIChat';
 import AlertsModal from './components/modules/AlertsModal';
 import s from './App.module.css';
@@ -31,6 +32,7 @@ const App = () => {
       case 'narratives':   return <NarrativeDetector />;
       case 'journal':      return <TradeJournal />;
       case 'whatmoved':    return <WhatMovedThis />;
+      case 'settings':     return <Settings />;
       default:             return <MacroRadar onSetAlert={() => setAlertsOpen(true)} />;
     }
   };
