@@ -11,7 +11,7 @@
 - **QuantEdge AI**: Fully functional chatbot powered by Claude API
 
 ---
-
+ 
 ## Setup
 
 ### 1. Install dependencies
